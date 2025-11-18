@@ -1,4 +1,4 @@
-# Meus Gastos
+# My Expenses
 
 Aplicação de controle financeiro pessoal desenvolvida com Next.js, Prisma e Firebase Authentication.
 
@@ -33,8 +33,8 @@ Aplicação de controle financeiro pessoal desenvolvida com Next.js, Prisma e Fi
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/meus-gastos.git
-cd meus-gastos
+git clone https://github.com/seu-usuario/my-expenses.git
+cd my-expenses
 ```
 
 2. Instale as dependências:
@@ -74,7 +74,7 @@ Acesse [http://localhost:3000](http://localhost:3000)
 ## 📱 Estrutura do Projeto
 
 ```
-meus-gastos/
+my-expenses/
 ├── app/                    # Páginas Next.js (App Router)
 │   ├── api/               # API Routes
 │   ├── login/             # Página de login
