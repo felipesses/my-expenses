@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+// Forçar renderização dinâmica (usa headers)
+export const dynamic = 'force-dynamic'
+
 function getUserId(request: NextRequest): string | null {
   const userId = request.headers.get('x-user-id')
   return userId
