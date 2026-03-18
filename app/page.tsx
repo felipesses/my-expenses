@@ -44,13 +44,7 @@ import {
   Menu,
   Trash2,
 } from "lucide-react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 interface Transacao {
   id: number;
@@ -101,19 +95,19 @@ function HomeContent() {
   const [loading, setLoading] = useState(true);
 
   const hoje = new Date();
-  
+
   // Carregar mês selecionado do localStorage
   const [mesSelecionado, setMesSelecionado] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('mesSelecionado');
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("mesSelecionado");
       return saved ? parseInt(saved) : hoje.getMonth() + 1;
     }
     return hoje.getMonth() + 1;
   });
-  
+
   const [anoSelecionado, setAnoSelecionado] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('anoSelecionado');
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("anoSelecionado");
       return saved ? parseInt(saved) : hoje.getFullYear();
     }
     return hoje.getFullYear();
@@ -121,9 +115,9 @@ function HomeContent() {
 
   // Salvar mês selecionado no localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('mesSelecionado', mesSelecionado.toString());
-      localStorage.setItem('anoSelecionado', anoSelecionado.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem("mesSelecionado", mesSelecionado.toString());
+      localStorage.setItem("anoSelecionado", anoSelecionado.toString());
     }
   }, [mesSelecionado, anoSelecionado]);
 
@@ -147,7 +141,7 @@ function HomeContent() {
           headers: {
             "x-user-id": user.uid,
           },
-        }
+        },
       );
 
       if (resumoResponse.ok) {
@@ -165,7 +159,8 @@ function HomeContent() {
       if (transacoesResponse.ok) {
         const data = await transacoesResponse.json();
         const transacoesMes = data.filter(
-          (t: Transacao) => t.mes === mesSelecionado && t.ano === anoSelecionado
+          (t: Transacao) =>
+            t.mes === mesSelecionado && t.ano === anoSelecionado,
         );
         setTransacoes(transacoesMes);
         // Armazenar todas as transações para cálculo de reserva
@@ -212,24 +207,24 @@ function HomeContent() {
   // Mapear categorias para ícones e cores
   const categoriaConfig: Record<string, { icon: any; color: string }> = {
     "Cartão de Crédito": { icon: CreditCard, color: "#8b5cf6" },
-    "Mensalidade": { icon: CreditCard, color: "#f43f5e" },
-    "Parcelamento": { icon: CreditCard, color: "#ec4899" },
-    "PIX": { icon: Wallet, color: "#10b981" },
-    "Medicamento": { icon: Smartphone, color: "#ec4899" },
-    "Supermercado": { icon: ShoppingCart, color: "#f59e0b" },
-    "Saúde": { icon: Smartphone, color: "#ec4899" },
-    "Transporte": { icon: Car, color: "#3b82f6" },
-    "Moradia": { icon: HomeIcon, color: "#10b981" },
-    "Educação": { icon: CreditCard, color: "#f43f5e" },
-    "Lazer": { icon: ShoppingCart, color: "#8b5cf6" },
-    "Tecnologia": { icon: Smartphone, color: "#ec4899" },
-    "Assinaturas": { icon: CreditCard, color: "#f43f5e" },
-    "Outros": { icon: MoreHorizontal, color: "#6b7280" },
+    Mensalidade: { icon: CreditCard, color: "#f43f5e" },
+    Parcelamento: { icon: CreditCard, color: "#ec4899" },
+    PIX: { icon: Wallet, color: "#10b981" },
+    Medicamento: { icon: Smartphone, color: "#ec4899" },
+    Supermercado: { icon: ShoppingCart, color: "#f59e0b" },
+    Saúde: { icon: Smartphone, color: "#ec4899" },
+    Transporte: { icon: Car, color: "#3b82f6" },
+    Moradia: { icon: HomeIcon, color: "#10b981" },
+    Educação: { icon: CreditCard, color: "#f43f5e" },
+    Lazer: { icon: ShoppingCart, color: "#8b5cf6" },
+    Tecnologia: { icon: Smartphone, color: "#ec4899" },
+    Assinaturas: { icon: CreditCard, color: "#f43f5e" },
+    Outros: { icon: MoreHorizontal, color: "#6b7280" },
   };
 
   // Calcular gastos por categoria a partir das transações reais
   const gastosPorCategoriaMap = new Map<string, number>();
-  
+
   transacoes
     .filter((t) => t.tipo === "despesa")
     .forEach((t) => {
@@ -386,7 +381,9 @@ function HomeContent() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl text-slate-900 mb-1">{formatarMoeda(resumo.renda)}</div>
+              <div className="text-3xl text-slate-900 mb-1">
+                {formatarMoeda(resumo.renda)}
+              </div>
               <p className="text-sm text-slate-600">Total do mês</p>
             </CardContent>
           </Card>
@@ -579,7 +576,7 @@ function HomeContent() {
                     .filter((t) => t.tipo === "renda")
                     .sort(
                       (a, b) =>
-                        new Date(b.data).getTime() - new Date(a.data).getTime()
+                        new Date(b.data).getTime() - new Date(a.data).getTime(),
                     )
                     .map((transacao) => (
                       <div
@@ -593,7 +590,10 @@ function HomeContent() {
                             </p>
                             <div className="flex flex-col gap-2">
                               <div className="flex items-center gap-2">
-                                <Badge variant="secondary" className="text-xs font-medium">
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs font-medium"
+                                >
                                   {transacao.categoria}
                                 </Badge>
                               </div>
@@ -604,7 +604,7 @@ function HomeContent() {
                                     day: "2-digit",
                                     month: "2-digit",
                                     year: "numeric",
-                                  }
+                                  },
                                 )}
                               </span>
                             </div>
@@ -667,7 +667,7 @@ function HomeContent() {
                     .filter((t) => t.tipo === "despesa")
                     .sort(
                       (a, b) =>
-                        new Date(b.data).getTime() - new Date(a.data).getTime()
+                        new Date(b.data).getTime() - new Date(a.data).getTime(),
                     )
                     .map((transacao) => (
                       <div
@@ -681,7 +681,10 @@ function HomeContent() {
                             </p>
                             <div className="flex flex-col gap-2">
                               <div className="flex items-center gap-2">
-                                <Badge variant="secondary" className="text-xs font-medium">
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs font-medium"
+                                >
                                   {transacao.categoria}
                                 </Badge>
                               </div>
@@ -692,7 +695,7 @@ function HomeContent() {
                                     day: "2-digit",
                                     month: "2-digit",
                                     year: "numeric",
-                                  }
+                                  },
                                 )}
                               </span>
                             </div>
@@ -755,7 +758,7 @@ function HomeContent() {
                     .filter((t) => t.tipo === "economia")
                     .sort(
                       (a, b) =>
-                        new Date(b.data).getTime() - new Date(a.data).getTime()
+                        new Date(b.data).getTime() - new Date(a.data).getTime(),
                     )
                     .map((transacao) => (
                       <div
@@ -769,7 +772,10 @@ function HomeContent() {
                             </p>
                             <div className="flex flex-col gap-2">
                               <div className="flex items-center gap-2">
-                                <Badge variant="secondary" className="text-xs font-medium">
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs font-medium"
+                                >
                                   {transacao.categoria}
                                 </Badge>
                               </div>
@@ -780,7 +786,7 @@ function HomeContent() {
                                     day: "2-digit",
                                     month: "2-digit",
                                     year: "numeric",
-                                  }
+                                  },
                                 )}
                               </span>
                             </div>
@@ -825,119 +831,6 @@ function HomeContent() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Recomendação de Economia */}
-        <Card className="border-none shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50">
-          <CardHeader>
-            <CardTitle className="text-slate-900 flex items-center gap-2">
-              <PiggyBank className="h-5 w-5 text-blue-600" />
-              Recomendação de Reserva de Emergência
-            </CardTitle>
-            <CardDescription>
-              Baseado nas suas despesas mensais
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {(() => {
-              // Calcular média de despesas do mês atual
-              const despesaMedia = resumo.despesas > 0 ? resumo.despesas : 0;
-              
-              // Reserva de emergência recomendada: 6 meses de despesas
-              const reservaRecomendada = despesaMedia * 6;
-              
-              // Total economizado até agora (soma de TODAS as economias de todos os meses)
-              const totalEconomizado = todasTransacoes
-                .filter((t) => t.tipo === "economia")
-                .reduce((acc, t) => acc + t.valor, 0);
-              
-              // Quanto falta para atingir a reserva
-              const faltaParaReserva = Math.max(0, reservaRecomendada - totalEconomizado);
-              
-              // Percentual da reserva atingido
-              const percentualReserva = reservaRecomendada > 0 
-                ? Math.min(100, (totalEconomizado / reservaRecomendada) * 100)
-                : 0;
-
-              return (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 rounded-lg bg-white">
-                      <p className="text-sm text-slate-600 mb-1">
-                        Despesa Média Mensal
-                      </p>
-                      <p className="text-2xl font-bold text-slate-900">
-                        {formatarMoeda(despesaMedia)}
-                      </p>
-                    </div>
-                    <div className="p-4 rounded-lg bg-white">
-                      <p className="text-sm text-slate-600 mb-1">
-                        Reserva Recomendada
-                      </p>
-                      <p className="text-2xl font-bold text-blue-600">
-                        {formatarMoeda(reservaRecomendada)}
-                      </p>
-                      <p className="text-xs text-slate-500 mt-1">
-                        (6 meses de despesas)
-                      </p>
-                    </div>
-                    <div className="p-4 rounded-lg bg-white">
-                      <p className="text-sm text-slate-600 mb-1">
-                        Total Economizado
-                      </p>
-                      <p className="text-2xl font-bold text-green-600">
-                        {formatarMoeda(totalEconomizado)}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-700">
-                        Progresso da Reserva de Emergência
-                      </span>
-                      <span className="font-semibold text-slate-900">
-                        {percentualReserva.toFixed(1)}%
-                      </span>
-                    </div>
-                    <Progress value={percentualReserva} className="h-3" />
-                  </div>
-
-                  {faltaParaReserva > 0 ? (
-                    <div className="p-4 rounded-lg bg-amber-50 border border-amber-200">
-                      <p className="text-sm font-medium text-amber-900 mb-1">
-                        💡 Recomendação
-                      </p>
-                      <p className="text-sm text-amber-800">
-                        Você ainda precisa economizar{" "}
-                        <span className="font-semibold">
-                          {formatarMoeda(faltaParaReserva)}
-                        </span>{" "}
-                        para atingir sua reserva de emergência recomendada.
-                      </p>
-                      <p className="text-xs text-amber-700 mt-2">
-                        Economize pelo menos{" "}
-                        <span className="font-semibold">
-                          {formatarMoeda(faltaParaReserva / 12)}
-                        </span>{" "}
-                        por mês durante 12 meses para alcançar sua meta.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="p-4 rounded-lg bg-green-50 border border-green-200">
-                      <p className="text-sm font-medium text-green-900 mb-1">
-                        🎉 Parabéns!
-                      </p>
-                      <p className="text-sm text-green-800">
-                        Você já atingiu sua reserva de emergência recomendada!
-                        Continue economizando para manter sua segurança financeira.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
